@@ -1,6 +1,5 @@
 clear
 
-
 #update func
 update(){
   echo -e "\n\e[1;97m [\e[1;93m*\e[1;97m] \e[1;93mUpdating and Upgrading packages\e[1;97m:\n"
@@ -53,19 +52,20 @@ echo ' _____                                                                    
 (_____)                                                                    (_____)'
 echo ''
 
+neofetch
 
 #custom-input
 PS1='\n\[\e[92;1m\]┌─\[\e[0;91m\][\[\e[0m\]\T\[\e[91m\]]\[\e[92;1m\]─\[\e[0;91m\][\[\e[38;5;226m\]JS\[\e[91m\]]\[\e[92;1m\]──(\[\e[0m\]\#\[\e[92;1m\])\n└─\[\e[0;91m\][\[\e[96m\]\w\[\e[91m\]]\[\e[38;5;41;1m\]──\[\e[92m\]►\[\e[0m\] '
 
 
 #aliases-and-func
+alias ll='ls -alF'
 alias ls='lsd'
 alias r='termux-reload-settings'
 alias lsa='lsd -a'
 cdl() {
   cd "$1" && lsa
 }
-alias s='source ~/.bashrc'
 rmd(){
   rm -r "$1" && lsa
 }
@@ -73,4 +73,4 @@ alias c='clear'
 alias b='. ~/.bashrc'
 alias dx11='bash ~/debian_x11.sh'
 alias d='proot-distro login --user js debian --bind /dev/null:/proc/sys/kernel/cap_last_last --shared-tmp --fix-low-ports'
-alias nf='neofetch'
+alias nf='c;neofetch'
