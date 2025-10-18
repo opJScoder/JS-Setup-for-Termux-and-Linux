@@ -11,6 +11,7 @@ update(){
 
 
 #welcome and next
+welcome(){
 echo -e "\n"
 echo -e "\e[1;97m<\e[1;32m==================================\e[1;97m>"
 echo -e "  \e[1;97m‡\e[1;91m★\e[1;97m‡  \e[1;93m Welcome to \e[1;96mJS\e[1;97m-\e[1;96mTermux  \e[1;97m‡\e[1;91m★\e[1;97m‡"
@@ -22,7 +23,7 @@ case $a in
   n) : ;;
   *) dx11 ;;
   esac
-
+}
 
 #continued-art-on-startup
 clear
