@@ -1,72 +1,76 @@
-# ~/.bashrc — customized by JS
-
-#Welcome!
 clear
-echo -e "\n\e[1;97m<\e[1;32m=========================================\e[1;97m>"
-echo -e "  \e[1;97m‡\e[1;91m★\e[1;97m‡  \e[1;93m Welcome to \e[1;96mDebian 13(Trixie)  \e[1;97m‡\e[1;91m★\e[1;97m‡"
-echo -e "\e[1;97m<\e[1;32m=========================================\e[1;97m>"
-echo
-quotes=(
-    "Keep learning, JS — progress begins with curiosity."
-    "Innovation thrives where questions are asked."
-    "Simplicity is the ultimate sophistication."
-    "Stay humble, think critically, and build boldly."
-    "Talk is cheap. Show me code!"
-)
-echo -e "\033[1;92mQoute: \033[1;96m${quotes[$RANDOM % ${#quotes[@]}]}\033[0m"
 
-# Exit if not an interactive shell
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+#update func
+update(){
+  echo -e "\n\e[1;97m [\e[1;93m*\e[1;97m] \e[1;93mUpdating and Upgrading packages\e[1;97m:\n"
+  pkg update -y;pkg upgrade -y
+  pkg autoclean -y && pkg clean -y
+  apt autoremove -y
+}
 
-# History settings
-HISTCONTROL=ignoreboth
-shopt -s histappend
-HISTSIZE=1000
-HISTFILESIZE=2000
 
-# Auto-adjust terminal size
-shopt -s checkwinsize
+#welcome and next
+welcome(){
+echo -e "\n"
+echo -e "\e[1;97m<\e[1;32m==================================\e[1;97m>"
+echo -e "  \e[1;97m‡\e[1;91m★\e[1;97m‡  \e[1;93m Welcome to \e[1;96mJS\e[1;97m-\e[1;96mTermux  \e[1;97m‡\e[1;91m★\e[1;97m‡"
+echo -e "\e[1;97m<\e[1;32m==================================\e[1;97m>"
+echo -ne "\n\e[1;93mWant to update and upgrade Termux? (y/n): [Enter to start pd] "
+read a
+case $a in
+  y) update ;;
+  n) : ;;
+  *) dx11 ;;
+  esac
+}
 
-# Less-friendly enhancement
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+#continued-art-on-startup
+clear
+echo -e "\e[1;32m\n"
+echo ' _____                                                                      _____
+( ___ )                                                                    ( ___ )
+ |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   |
+ |   |                                                                      |   |
+ |   |                                                                      |   |
+ |   |   _    _  _____  _      _____  _____ ___  ___ _____   _____  _____   |   |
+ |   |  | |  | ||  ___|| |    /  __ \|  _  ||  \/  ||  ___| |_   _||  _  |  |   |
+ |   |  | |  | || |__  | |    | /  \/| | | || .  . || |__     | |  | | | |  |   |
+ |   |  | |/\| ||  __| | |    | |    | | | || |\/| ||  __|    | |  | | | |  |   |
+ |   |  \  /\  /| |___ | |____| \__/\\ \_/ /| |  | || |___    | |  \ \_/ /  |   |
+ |   |   \/  \/ \____/ \_____/ \____/ \___/ \_|  |_/\____/    \_/   \___/   |   |
+ |   |      ___  _____        _____  _____ ______ ___  ___ _   _ __   __    |   |
+ |   |     |_  |/  ___|      |_   _||  ___|| ___ \|  \/  || | | |\ \ / /    |   |
+ |   |       | |\ `--.  ______ | |  | |__  | |_/ /| .  . || | | | \ V /     |   |
+ |   |       | | `--. \|______|| |  |  __| |    / | |\/| || | | | /   \     |   |
+ |   |   /\__/ //\__/ /        | |  | |___ | |\ \ | |  | || |_| |/ /^\ \    |   |
+ |   |   \____/ \____/         \_/  \____/ \_| \_|\_|  |_/ \___/ \/   \/    |   |
+ |   |                                                                      |   |
+ |   |                                                                      |   |
+ |   |                                                                      |   |
+ |   |                                                                      |   |
+ |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___|
+(_____)                                                                    (_____)'
+echo ''
 
-# Enable color support and useful aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    if command -v lsd &>/dev/null; then
-        alias ls='lsd'
-    else
-        alias ls='ls --color=auto'
-    fi
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+neofetch
 
-# Aliases
-alias ll='ls -alF'
-alias lsa='ls -A'
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-alias py='source ~/Vscode/Python/.venv/bin/activate'
-alias up='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean && sudo apt clean'
-alias nf='clear; neofetch'
+#custom-input
+PS1='\n\[\e[92;1m\]┌─\[\e[0;91m\][\[\e[0m\]\T\[\e[91m\]]\[\e[92;1m\]─\[\e[0;91m\][\[\e[38;5;226m\]JS\[\e[91m\]]\[\e[92;1m\]──(\[\e[0m\]\#\[\e[92;1m\])\n└─\[\e[0;91m\][\[\e[96m\]\w\[\e[91m\]]\[\e[38;5;41;1m\]──\[\e[92m\]►\[\e[0m\] '
+
+
+#aliases-and-func
+alias ls='lsd'
+alias r='termux-reload-settings'
+alias lsa='lsd -a'
+cdl() {
+  cd "$1" && lsa
+}
+alias s='source ~/.bashrc'
+rmd(){
+  rm -r "$1" && lsa
+}
 alias c='clear'
 alias b='. ~/.bashrc'
-
-# Bash completion
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-
-# Optional: enable GUI/VNC
-# export DISPLAY=:0
-
-# Custom Prompt
-PS1='\n\[\e[92;1m\]┌─\[\e[0;91m\][\[\e[0m\]\T\[\e[91m\]]\[\e[92;1m\]─\[\e[0;91m\][\[\e[38;5;226m\]JS\[\e[91m\]]\[\e[92;1m\]──(\[\e[0m\]\#\[\e[92;1m\])\n└─\[\e[0;91m\][\[\e[96m\]\w\[\e[91m\]]\[\e[38;5;41;1m\]──\[\e[92m\]►\[\e[0m\] '
+alias dx11='bash ~/debian_x11.sh'
+alias d='proot-distro login --user js debian --bind /dev/null:/proc/sys/kernel/cap_last_last --shared-tmp --fix-low-ports'
+alias nf='c;neofetch'
