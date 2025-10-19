@@ -62,7 +62,7 @@ PS1='\n\[\e[92;1m\]┌─\[\e[0;91m\][\[\e[0m\]\T\[\e[91m\]]\[\e[92;1m\]─\[\e[
 alias ll='ls -alF'
 alias ls='lsd'
 alias r='termux-reload-settings'
-alias lsa='lsd -a'
+alias lsa='ls -a'
 cdl() {
   cd "$1" && lsa
 }
@@ -74,3 +74,32 @@ alias b='. ~/.bashrc'
 alias dx11='bash ~/debian_x11.sh'
 alias d='proot-distro login --user js debian --bind /dev/null:/proc/sys/kernel/cap_last_last --shared-tmp --fix-low-ports'
 alias nf='c;neofetch'
+gcc() {
+    if [ -z "$1" ]; then
+        echo -e "\n\e[1;93mUsage: \e[1;92mgcc [filename.cpp] [output-filename] [input.txt]"
+        return 1
+    fi
+    SRC="$1"
+    if [ -z "$2" ]; then
+    	OUT="output"
+    else
+    	OUT="$2"
+    fi
+    INP="$3"
+    c
+    clang++ -std=c++17 -O2 -pipe -s "$SRC" -o "$OUT" || return 1
+    echo -e "\e[1;92mInput:\n\e[1;0m"
+    cat "$INP"
+    echo -e "\e\n\n[1;92mOutput:\n\e[1;0m"
+	start=$(date +%s%N)
+    if [ -n "$INP" ]; then
+        ./"$OUT" < "$INP"
+    else
+        ./"$OUT"
+    fi
+    end=$(date +%s%N)
+    runtime=$(echo "scale=3; ($end - $start)/1000000000" | bc -l)
+    echo -e "\n\n-----------------------------"
+    printf " |   Output in \e[38;5;226m%.3f\e[1;0m sec   |\n" "$runtime";
+    echo "-----------------------------"
+}
