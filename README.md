@@ -41,3 +41,4 @@ Other aliases:
 - cdl $1 - cd $1 && lsa
 - rmd $1 - rm -r $1 && lsa
 - nf - c;neofetch
+- update - Update and upgrade all packages
